@@ -24,5 +24,6 @@ func index(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w, "holla")
 	default:
 		fmt.Fprint(w, "Hi there, Welcome to Devops CI CD Pipeline")
+		fmt.Fprint(w, "My First Pipeline project is successful!!")
 	}
 }
