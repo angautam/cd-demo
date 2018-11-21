@@ -13,6 +13,7 @@
           else
             docker service update --image ${DOCKERHUB_USERNAME}/cd-demo:${BUILD_NUMBER} cd-demo
           fi
+          '''
 
       }catch(e) {
         sh "docker service update --rollback  cd-demo"
