@@ -9,7 +9,7 @@
     stage("Integration Test") {
       try {
         sh "docker build -t cd-demo ."
-        sh "docker rmi -f cd-demo || true"
+        sh "docker rm -f cd-demo || true"
         sh "docker run -d -p 8090:8080 --name=cd-demo cd-demo"
         // env variable is used to set the server where go test will connect to run the test
         sh "docker run --rm -v ${WORKSPACE}:/go/src/cd-demo --link=cd-demo -e SERVER=cd-demo golang go test cd-demo -v --run Integration"
@@ -17,9 +17,9 @@
       catch(e) {
         error "Integration Test failed"
       }finally {
-        sh "docker rmi -f cd-demo || true"
-        sh "docker ps -aq | xargs docker stop || true"
-        sh "docker images -aq -f dangling=true | xargs docker stop || true"
+        sh "docker rm -f cd-demo || true"
+        sh "docker ps -aq | xargs docker rm || true"
+        sh "docker images -aq -f dangling=true | xargs docker rm || true"
       }
     }
     stage("Build") {
