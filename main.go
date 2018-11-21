@@ -23,6 +23,6 @@ func index(w http.ResponseWriter, r *http.Request) {
 	case "hi":
 		fmt.Fprint(w, "holla")
 	default:
-		fmt.Fprint(w, "Hi Welcome to Devops")
+		fmt.Fprint(w, "Hi there, Welcome to Devops")
 	}
 }
