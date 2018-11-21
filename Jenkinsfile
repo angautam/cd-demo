@@ -19,7 +19,7 @@
       }finally {
         sh "docker rmi -f cd-demo || true"
         sh "docker ps -aq | xargs docker stop || true"
-        sh "docker images -aq -f dangling=true | xargs docker rmi || true"
+        sh "docker images -aq -f dangling=true | xargs docker stop || true"
       }
     }
     stage("Build") {
