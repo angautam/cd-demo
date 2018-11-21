@@ -13,22 +13,7 @@
           else
             docker service update --image ${DOCKERHUB_USERNAME}/cd-demo:${BUILD_NUMBER} cd-demo
           fi
-          '''
-        // run some final tests in production
-        checkout scm
-        sh '''
-          sleep 60s 
-          for i in `seq 1 20`;
-          do
-            STATUS=$(docker service inspect --format '{{ .UpdateStatus.State }}' cd-demo)
-            if [[ "$STATUS" != "updating" ]]; then
-              docker run --rm -v ${WORKSPACE}:/go/src/cd-demo --network cd-demo -e SERVER=cd-demo golang go test cd-demo -v --run Integration
-              break
-            fi
-            sleep 10s
-          done
-          
-        '''
+
       }catch(e) {
         sh "docker service update --rollback  cd-demo"
         error "Service update failed in production"
