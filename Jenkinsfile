@@ -10,7 +10,7 @@
       try {
         sh "docker build -t cd-demo ."
         sh "docker rm -f cd-demo || true"
-        sh "docker run -d -p 8080:8080 --name=cd-demo cd-demo"
+        sh "docker run -d -p 8090:8080 --name=cd-demo cd-demo"
         // env variable is used to set the server where go test will connect to run the test
         sh "docker run --rm -v ${WORKSPACE}:/go/src/cd-demo --link=cd-demo -e SERVER=cd-demo golang go test cd-demo -v --run Integration"
       }
@@ -38,7 +38,7 @@
     stage("Staging") {
       try {
         sh "docker rm -f cd-demo || true"
-        sh "docker run -d -p 8080:8080 --name=cd-demo ${DOCKERHUB_USERNAME}/cd-demo:${BUILD_NUMBER}"
+        sh "docker run -d -p 8090:8080 --name=cd-demo ${DOCKERHUB_USERNAME}/cd-demo:${BUILD_NUMBER}"
         sh "docker run --rm -v ${WORKSPACE}:/go/src/cd-demo --link=cd-demo -e SERVER=cd-demo golang go test cd-demo -v"
 
       } catch(e) {
@@ -60,7 +60,7 @@
           if [[ "$SERVICES" -eq 0 ]]; then
             docker network rm cd-demo || true
             docker network create --driver overlay --attachable cd-demo
-            docker service create --replicas 3 --network cd-demo --name cd-demo -p 8080:8080 ${DOCKERHUB_USERNAME}/cd-demo:${BUILD_NUMBER}
+            docker service create --replicas 3 --network cd-demo --name cd-demo -p 8090:8080 ${DOCKERHUB_USERNAME}/cd-demo:${BUILD_NUMBER}
           else
             docker service update --image ${DOCKERHUB_USERNAME}/cd-demo:${BUILD_NUMBER} cd-demo
           fi
