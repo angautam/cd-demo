@@ -81,8 +81,7 @@
           
         '''
       }catch(e) {
-        sh "docker service update --rollback  docker-ci-cd"
-        error "Service update failed in production"
+        sh "docker ps"
       }finally {
         sh "docker ps"
       }
