@@ -84,7 +84,7 @@
         sh "docker service update --rollback  docker-ci-cd"
         error "Service update failed in production"
       }finally {
-        sh "docker ps -aq | xargs docker stop || true"
+        sh "docker ps"
       }
     }
   }
