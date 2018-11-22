@@ -23,7 +23,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 	case "hi":
 		fmt.Fprint(w, "holla")
 	default:
-		fmt.Fprint(w, "Hi Nabil, Welcome to Devops CI CD Pipeline")
+		fmt.Fprint(w, "Hi Nabil Courdy, Welcome to Devops CI CD Pipeline")
 		fmt.Fprint(w, "My First Pipeline project is successful")
 	}
 }
